@@ -14,7 +14,7 @@ def criar_schema():
     Returns:
         DataFrameSchema do Pandera
     """
-    
+
     schema = DataFrameSchema({
         "cliente_id": Column(int, nullable=False, unique=True),
         "idade": Column(int, Check.in_range(18, 80)),
@@ -25,7 +25,7 @@ def criar_schema():
         "score_credito": Column(float, Check.in_range(300, 850)),
         "respondeu_campanha": Column(int, Check.isin([0, 1])),
     })
-    
+
     return schema
 
 
@@ -40,9 +40,9 @@ def validar_dados(df):
         DataFrame validado (ou levanta exceção se inválido)
     """
     schema = criar_schema()
-    
+
     print("Validando dados...")
-    
+
     try:
         df_validado = schema.validate(df)
         print("✅ Dados válidos!")
@@ -57,7 +57,7 @@ def validar_dados(df):
 if __name__ == "__main__":
     # Carregar dados para teste
     df = pd.read_csv("../data/clientes_campanha.csv")
-    
+
     # Tentar validar
     try:
         df_validado = validar_dados(df)
